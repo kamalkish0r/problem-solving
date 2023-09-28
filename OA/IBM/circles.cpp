@@ -35,14 +35,14 @@ string find_relation(string circlePair) {
 	double centre_dist = find_dist(_cirlcePair[0], _cirlcePair[1], _cirlcePair[3], _cirlcePair[4]);
 	double r1 = _cirlcePair[2], r2 = _cirlcePair[5];
 
+	if (centre_dist == r1 + r2 or centre_dist == abs(r1 - r2))
+		return "Touching";
 	if (centre_dist <= max(r1, r2) - min(r1, r2))
 		return "Disjoint-Inside";
 	if (centre_dist > r1 + r2) 
 		return "Disjoint-Outside";
 	if (centre_dist < r1 + r2)
 		return "Intersecting";
-	if (centre_dist == r1 + r2)
-		return "Touching";
 
 	return "";
 }
