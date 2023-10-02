@@ -37,6 +37,32 @@ vector<long> getNumVectors(vector<int> keys, vector<vector<int>> queries) {
     return ans;
 }
 
+vector<long> getNumVectorsAccepted(vector<int> keys, vector<vector<int>> queries) {
+    int N = 1e6 + 6;
+    const int m = *max_element(keys.begin(), keys.end());
+    vector<int> have(m + 1);
+    for (int key : keys) {
+        have[key]++;
+    }
+
+    vector<int> count(N);
+    for (int i = 1; i <= m; i++) {
+        for (int j = i; j <= m; j += i) {
+            count[i] += have[j];
+        }
+    }
+
+    vector<long> s(N);
+    for (int i = 1; i < N; i++) {
+        s[i] = s[i - 1] + (count[i] * count[i]);
+    }
+    vector<long> r(queries.size());
+    for (int i = 0; i < queries.size(); i++) {
+        r[i] = s[q[i][1]] - s[q[i][0] - 1];
+    }
+    return r;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
